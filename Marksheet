@@ -1,0 +1,188 @@
+#include <iostream>
+
+#include <iomanip>
+
+using namespace std;
+
+class Marksheet {
+
+private:
+
+ int seat_no;
+
+ string student_name;
+
+ string student_class;
+
+ string subject_name[4];
+float int_marks[4];
+
+ float ext_marks[4];
+
+ float total[4];
+
+ float total_marks;
+
+ float grand_total;
+
+ float percentage;
+
+ char grade;
+
+public:
+
+ // Constructor to initialize grand_total to 0
+
+ Marksheet() {
+
+ grand_total = 0;
+
+ total_marks = 400; // Assuming 100 marks per subject (4 subjects)
+
+ }
+
+ // User-defined manipulator to format output
+
+ friend ostream& operator<<(ostream &out, Marksheet &ms);
+
+ // Function to accept student information
+
+ void accept_info() {
+
+ cout << "Enter Seat Number: ";
+
+ cin >> seat_no;
+
+ cin.ignore(); // To ignore the newline after seat_no input
+
+ cout << "Enter Student Name: ";
+
+ getline(cin, student_name);
+
+ cout << "Enter Class: ";
+
+ getline(cin, student_class);
+
+ // Accept information for 4 subjects
+
+ for (int i = 0; i < 4; i++) {
+
+ cout << "Enter subject name for Subject " << i + 1 << ": ";
+
+ getline(cin, subject_name[i]);
+
+ cout << "Enter Internal Marks for " << subject_name[i] << ": ";
+
+ cin >> int_marks[i];
+
+ cout << "Enter External Marks for " << subject_name[i] << ": ";
+
+ cin >> ext_marks[i];
+
+ cin.ignore(); // To ignore the newline after external marks input
+
+ total[i] = int_marks[i] + ext_marks[i]; // Calculate total marks for the subject
+
+ }
+
+ }
+
+ // Function to calculate grand total, percentage, and grade
+void calculate() {
+grand_total = 0;
+
+ // Calculate grand total and percentage
+
+ for (int i = 0; i < 4; i++) {
+
+ grand_total += total[i];
+
+ }
+
+ percentage = (grand_total / (total_marks * 4)) * 100;
+
+ // Assign grade based on percentage
+
+ if (percentage >= 90) {
+
+ grade = 'A';
+
+ } else if (percentage >= 75) {
+
+ grade = 'B';
+
+ } else if (percentage >= 50) {
+
+ grade = 'C';
+
+ } else {
+
+ grade = 'D';
+
+ }
+
+ }
+
+ // Function to display the marksheet
+
+ void display() {
+
+ // Display student information and marksheet
+
+ cout << "Marks Details: \n";
+
+ cout << "Seat No. : " << seat_no << endl;
+
+ cout << "Student Name: " << student_name << endl;
+
+ cout << "Class: " << student_class << endl;
+
+ cout << "\nSubject-wise Marks:\n";
+
+ cout << left << setw(20) << "Subject Name" << setw(15) << "Internal Marks" << 
+
+setw(15) << "External Marks" << setw(15) << "Total Marks" << endl;
+
+ for (int i = 0; i < 4; i++) {
+
+ cout << setw(20) << subject_name[i] << setw(15) << int_marks[i] << setw(15) 
+
+<< ext_marks[i] << setw(15) << total[i] << endl;
+
+ }
+
+ cout << "\nGrand Total: " << grand_total << " out of " << total_marks * 4 << 
+
+endl;
+
+ cout << "Percentage: " << fixed << setprecision(2) << percentage << "%" << endl;
+
+ cout << "Grade: " << grade << endl;
+
+ }
+
+};
+
+// User-defined manipulator to format the output of the marksheet
+
+ostream& operator<<(ostream &out, Marksheet &ms) {
+
+ ms.display(); // Call the display function to output the marksheetreturn out;
+
+}
+
+int main() {
+
+ Marksheet student; // Create an object of Marksheet class
+
+ student.accept_info(); // Accept student information
+
+ student.calculate(); // Calculate total, percentage, and grade
+
+ // Display the marksheet using the user-defined manipulator
+
+ cout << student;
+
+ return 0;
+
+}
