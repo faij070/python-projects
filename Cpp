@@ -1,0 +1,169 @@
+#include <iostream>
+
+#include <string>
+
+using namespace std;
+
+// Base class Customer
+
+class Customer {
+protected:
+
+ string name;
+
+ string phone_number;
+
+public:
+
+ // Function to read customer details
+
+ void readCustomerDetails() {
+
+ cout << "Enter Customer Name: ";
+
+ cin.ignore(); // to clear any leftover newline character
+
+ getline(cin, name);
+
+ cout << "Enter Customer Phone Number: ";
+
+ getline(cin, phone_number);
+
+ }
+
+ // Function to display customer details
+
+ void displayCustomerDetails() {
+
+ cout << "Name: " << name << endl;
+
+ cout << "Phone Number: " << phone_number << endl;
+
+ }
+
+};
+
+// Derived class Depositor (inherits from Customer)
+
+class Depositor : public Customer {
+
+protected:
+
+ int accno; // Account number
+
+ double balance; // Account balance
+
+public:
+
+ // Function to read depositor details
+
+ void readDepositorDetails() {
+
+ cout << "Enter Account Number: ";
+
+ cin >> accno;
+
+ cout << "Enter Balance: ";
+
+ cin >> balance;
+
+ }
+
+ // Function to display depositor details
+
+ void displayDepositorDetails() {
+
+ cout << "Account Number: " << accno << endl;
+
+ cout << "Balance: " << balance << endl;
+
+ }
+
+};
+
+// Derived class Borrower (inherits from Depositor)
+
+class Borrower : public Depositor {
+
+protected:
+
+ int loan_no; // Loan number
+
+ double loan_amt; // Loan amount
+
+public:
+
+ // Function to read borrower details
+
+ void readBorrowerDetails() {
+
+ cout << "Enter Loan Number: ";
+cin >> loan_no;
+
+ cout << "Enter Loan Amount: ";
+
+ cin >> loan_amt;
+
+ }
+
+ // Function to display borrower details
+
+ void displayBorrowerDetails() {
+
+ cout << "Loan Number: " << loan_no << endl;
+
+ cout << "Loan Amount: " << loan_amt << endl;
+
+ }
+
+};
+
+int main() {
+
+ int n;
+
+ // Ask the user for the number of customers
+
+ cout << "Enter the number of customers: ";
+
+ cin >> n;
+
+ // Create an array of Borrower objects (which inherits from Depositor and 
+
+Customer)
+
+ Borrower customers[n];
+
+ // Input details of each customer
+
+ for (int i = 0; i < n; i++) {
+
+ cout << "\nEnter details for Customer " << i + 1 << ":\n";
+
+ customers[i].readCustomerDetails();
+
+ customers[i].readDepositorDetails();
+
+ customers[i].readBorrowerDetails();
+
+ }
+
+ // Display details of each customer
+
+ cout << "\nDisplaying Customer Details:\n";
+
+ for (int i = 0; i < n; i++) {
+
+ cout << "\nCustomer " << i + 1 << ":\n";
+
+ customers[i].displayCustomerDetails();
+
+ customers[i].displayDepositorDetails();
+
+ customers[i].displayBorrowerDetails();
+
+ }
+
+ return 0;
+
+}
